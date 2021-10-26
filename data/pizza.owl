@@ -1,0 +1,551 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#"
+     xml:base="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:pizza-ontology="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology"/>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasCrust -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasCrust"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasSauce -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasSauce"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasTopping -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#hasTopping"/>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Calories -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Calories"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Price -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Price"/>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheese -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheese">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Crust -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Crust"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meat -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meat">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meaty_Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meaty_Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pescatarian_Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pescatarian_Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Red_Sauce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Red_Sauce">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Topping"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Spicy_Sauce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Spicy_Sauce">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thick_Crust -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thick_Crust">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Crust"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thin_Crust -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thin_Crust">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Crust"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Topping -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Topping"/>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegan_Pizza -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegan_Pizza">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Salty_Topping"/>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#White_Sauce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#White_Sauce">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+    </owl:Class>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Anchovy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Anchovy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Basil -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Basil">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Black_Olives -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Black_Olives">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Blueberries -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Blueberries">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheesy_Edge -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheesy_Edge">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thick_Crust"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cherry_Tomatoes -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cherry_Tomatoes">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Chocolate_Chips -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Chocolate_Chips">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Garlic -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Garlic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Ground_Beef -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Ground_Beef">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meat"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Margherita -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Margherita">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Basil"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">204</Calories>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</Price>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Marinara -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Marinara">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Garlic"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Oregano"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</Calories>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</Price>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican-blend_Cheese -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican-blend_Cheese">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheese"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican_Pizza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican_Pizza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meaty_Pizza"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheesy_Edge"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Black_Olives"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cherry_Tomatoes"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Ground_Beef"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican-blend_Cheese"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">350</Calories>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</Price>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheese"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Brownie_Fruit_Pizza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Brownie_Fruit_Pizza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Pizza"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Sauce"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Blueberries"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Redberries"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberries"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberry_Jam"/>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">17</Price>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Sauce -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Sauce">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Oregano -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Oregano">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegetables"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pepperoni -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pepperoni">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meat"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pepperoni_Pizza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pepperoni_Pizza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meaty_Pizza"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheesy_Edge"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pepperoni"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">255</Calories>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">14</Price>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Provolone -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Provolone">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Cheese"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Redberries -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Redberries">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thin_Crust"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food_Pizza -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food_Pizza">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pescatarian_Pizza"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
+        <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Anchovy"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Provolone"/>
+        <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Shrimps"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Shrimps -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Shrimps">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sea_Food"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberries -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberries">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberry_Jam -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberry_Jam">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Topping"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Thin_Crust -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Thin_Crust">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Thick_Crust"/>
+    </owl:NamedIndividual>
+
+
+
+    <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato">
+        <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Red_Sauce"/>
+    </owl:NamedIndividual>
+
+
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Crust"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pizza"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sauce"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Topping"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Meaty_Pizza"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Pescatarian_Pizza"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Pizza"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Vegan_Pizza"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Red_Sauce"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Spicy_Sauce"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Sauce"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#White_Sauce"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

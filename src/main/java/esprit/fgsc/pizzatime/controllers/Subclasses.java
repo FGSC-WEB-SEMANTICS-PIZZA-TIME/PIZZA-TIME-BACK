@@ -18,10 +18,8 @@ public class Subclasses {
     // Return the types of pizza or whatever class
     // http://localhost:8080/subclasses?type=Salty_Topping, http://localhost:8080/subclasses?type=Pizza
     @GetMapping("/subclasses")
-    protected Map<String, Object> getSubclasses(@RequestParam String type) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("subclasses", getTypeSubclasses(type));
-        return response;
+    protected List<String> getSubclasses(@RequestParam String type) {
+        return getTypeSubclasses(type);
     }
     private List<String> getTypeSubclasses(String type) {
         String queryString = OwlReaderUtil.QUERY_PREFIX + "SELECT DISTINCT ?x WHERE { "

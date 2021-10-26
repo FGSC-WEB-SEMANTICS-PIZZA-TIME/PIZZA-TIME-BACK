@@ -1,40 +1,53 @@
 package esprit.fgsc.pizzatime.controllers;
 
 import esprit.fgsc.pizzatime.controllers.utils.OwlReaderUtil;
-
 import esprit.fgsc.pizzatime.dto.QueryDTO;
-import lombok.extern.slf4j.Slf4j;
+import esprit.fgsc.pizzatime.dto.datatypes.Dropdown;
+import esprit.fgsc.pizzatime.dto.datatypes.Slider;
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
-@Slf4j
 @CrossOrigin("*")
 @RequestMapping("/pizzas/query")
 @RestController
 public class QueryPizzas {
     // WORKS
     // http://localhost:8080/pizzas/query
-    // you can select more properties by execute2colum
     @PostMapping
     public List<String> doGet(@RequestBody QueryDTO query) {
-        log.info(query.dropdownValues.values().toString());
+        StringBuilder DROPDOWN_VALUES = new StringBuilder();
+        StringBuilder DROPDOWN_KEYS = new StringBuilder();
+        for (Dropdown dropdown : query.dropdownValues){
+            DROPDOWN_KEYS.append("?").append(dropdown.propertyName).append(" ");
+            if (Objects.equals(dropdown.propertyName, "Type")){
+                DROPDOWN_VALUES.append("?x rdf:type  pizza:").append(dropdown.selected).append(" . ");
+            } else {
+                DROPDOWN_VALUES.append("?x pizza:").append(dropdown.propertyName).append("  pizza:").append(dropdown.selected).append(" . ");
+            }
+        }
+        StringBuilder SELECT_FIELDS = new StringBuilder();
+        StringBuilder SLIDER_FILTERS = new StringBuilder();
+        for (Slider slider: query.sliderValues){
+            SELECT_FIELDS.append("?").append(slider.propertyName).append(" ");
+            SLIDER_FILTERS.append(String
+                    .format(" FILTER ( ?%s     > %s) FILTER ( ?%s     < %s ) ",
+                            slider.propertyName, slider.min, slider.propertyName, slider.max));
+        }
         String queryString = OwlReaderUtil.QUERY_PREFIX + " "
-                + "SELECT   ?x ?y ?price "
+                + "SELECT   ?x %s "+ DROPDOWN_KEYS + SELECT_FIELDS
                 + "WHERE "
                 + "{ "
-                + (query.type    != null && !query.type.isEmpty()    ? "?x rdf:type 	      pizza:" + query.type    + " . " : "")
-//                + (query.getCrust()   != null && !query.getCrust().isEmpty()   ? "?x pizza:hasCrust   pizza:" + query.getCrust()   + " . " : "")
-//                + (query.getTopping() != null && !query.getTopping().isEmpty() ? "?x pizza:hasTopping pizza:" + query.getTopping() + " . " : "")
-//                + (query.getSauce()   != null && !query.getSauce().isEmpty()   ? "?x pizza:hasSauce   pizza:" + query.getSauce()   + " . " : "")
-//                + " ?x     pizza:Calories     ?y     . "
-//                + " ?x     pizza:Price        ?price . "
-//                + (query.getMinCalories() != 0 && query.getMaxCalories() != 0 ?" FILTER (?y     > "+query.getMinCalories()+") FILTER ( ?y     < "+query.getMaxCalories()+" ) ": "")
-//                + (query.getMinPrice()    != 0 && query.getMaxPrice()    != 0 ?" FILTER (?price > "+query.getMinPrice()   +") FILTER ( ?price < "+query.getMaxPrice()   +" ) ": "")
+                + DROPDOWN_VALUES
+                + " ?x pizza:Calories ?Calories . "
+                + " ?x pizza:Price    ?Price . "
+                + SLIDER_FILTERS
                 + "} "
                 + (query.limit != 0 ? " LIMIT "+query.limit : "")
-                + "OFFSET %s ";
-        ;
-        return OwlReaderUtil.executeQueryOneColumn(String.format(queryString,query.offset));
+                + " OFFSET %s ";
+        return OwlReaderUtil.executeQueryOneColumn(String.format(queryString,SELECT_FIELDS,query.offset));
     }
+
 }

@@ -1,13 +1,10 @@
 package esprit.fgsc.pizzatime.controllers.utils;
 
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.ontology.*;
 import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.FileManager;
+import org.json.simple.JSONObject;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -30,11 +27,25 @@ public class OwlReaderUtil {
                 QuerySolution solution = results.nextSolution();
                 Resource x = solution.getResource("x");
                 values.add(x.getLocalName());
+                //values.add(x.getURI());
             }
         }
         return values;
     }
-
+    public static void propertiesFromIndividualName(String className){
+        Model model = FileManager.getInternal().loadModelInternal( OWL_FILE );
+        Query query = QueryFactory.create(SELECT_BY_NAME);
+        try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
+            ResultSet results = qexec.execSelect();
+            while (results.hasNext()) {
+                QuerySolution solution = results.nextSolution();
+                logger.info("OK");
+                System.out.println(solution);
+                // Literal x = solution.getLiteral("x");
+                //values.add(x.getDatatype().getJavaClass().getName());
+            }
+        }
+    }
     public static List<String> executeQueryOneColumnLiteral(String queryString) {
         List<String> values = new ArrayList<>();
         Model model = FileManager.getInternal().loadModelInternal( OWL_FILE );
@@ -50,14 +61,8 @@ public class OwlReaderUtil {
         return values;
     }
 
-//    public static void test(Object... values){
-//        int i = 0;
-//        for(Object ob : values){
-//            System.out.println(i);
-//        }
-//    }
-    public static List<String> executeQueryTwoColumn(String queryString) {
-        ArrayList rows = new ArrayList();
+    public static List<List<String>> executeQueryTwoColumn(String queryString) {
+        List<List<String>> rows = new ArrayList<>();
         Model model = FileManager.getInternal().loadModelInternal(OWL_FILE);
         Query query = QueryFactory.create(queryString);
         try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
@@ -66,7 +71,7 @@ public class OwlReaderUtil {
                 QuerySolution solution = results.nextSolution();
                 logger.info(solution.toString());
                 Resource x = solution.getResource("x");
-                Literal y = solution.getLiteral("y");
+                Literal y = solution.getLiteral("Calories");
                 List<String> column1 = Arrays.asList(x.getLocalName(), y.getInt() + "");
                 rows.add(column1);
             }
@@ -88,4 +93,11 @@ public class OwlReaderUtil {
             + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
             + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
             + "PREFIX pizza: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>";
+    public static final String SELECT_BY_NAME = QUERY_PREFIX +
+            "SELECT DISTINCT ?property " +
+            "WHERE { " +
+            "  ?s a <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mexican_Pizza>;" +
+            "     ?property ?o ." +
+            "  FILTER isLiteral(?o)" +
+            "}";
 }

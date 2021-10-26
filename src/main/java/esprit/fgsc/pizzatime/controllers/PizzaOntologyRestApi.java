@@ -1,10 +1,7 @@
 package esprit.fgsc.pizzatime.controllers;
 
+import esprit.fgsc.pizzatime.controllers.utils.OwlReaderUtil;
 import org.apache.jena.ontology.*;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Statement;
@@ -27,14 +24,9 @@ public class PizzaOntologyRestApi {
     List<JSONObject> listVoitures=new ArrayList();
     OntModel model = null;
     public OntModel readModel() {
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+        try (FileReader reader = new FileReader(OwlReaderUtil.OWL_FILE)) {
+            OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
             model.read(reader,null);
-
             return model;
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,26 +87,18 @@ public class PizzaOntologyRestApi {
     }
 
     @RequestMapping(value = "/subClasses",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public   List<JSONObject> getSubClasses(@RequestParam("classname") String className) {
-        List<JSONObject> list=new ArrayList();
-        try {
-            this.model = this.readModel();
-            String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
-            System.out.println(classURI);
-            OntClass personne = this.model.getOntClass(classURI );
-            Iterator subIter = personne.listSubClasses();
-            while (subIter.hasNext()) {
-                OntClass sub = (OntClass) subIter.next();
-                JSONObject obj = new JSONObject();
-                obj.put("URI",sub.getURI());
-                obj.put("name",sub.getLocalName());
-                list.add(obj);
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
+    public   List<String> getSubClasses(@RequestParam("classname") String className) {
+        List<String> list=new ArrayList();
+        this.model = this.readModel();
+        String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
+        System.out.println(classURI);
+        OntClass personne = this.model.getOntClass(classURI );
+        Iterator subIter = personne.listSubClasses();
+        while (subIter.hasNext()) {
+            OntClass sub = (OntClass) subIter.next();
+            list.add(sub.getLocalName());
         }
-        return null;
+        return list;
     }
 
     @RequestMapping(value = "/Individus",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -132,10 +116,7 @@ public class PizzaOntologyRestApi {
                 list.add(obj);
 
             }
-
             return list;
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +128,6 @@ public class PizzaOntologyRestApi {
         List<JSONObject> list=new ArrayList();
         try {
             this.model = this.readModel();
-
             String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
             System.out.println(classURI);
             OntClass personne = this.model.getOntClass(classURI );
@@ -157,13 +137,8 @@ public class PizzaOntologyRestApi {
                 JSONObject obj = new JSONObject();
                 obj.put("URI",sub.getURI());
                 list.add(obj);
-
-
             }
-
             return list;
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,39 +146,24 @@ public class PizzaOntologyRestApi {
     }
 
     @RequestMapping(value = "/getClasProperty",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public   List<JSONObject> getClasProperty(@RequestParam("classname") String className) {
+    public List<JSONObject> getClasProperty(@RequestParam String className) {
         List<JSONObject> list=new ArrayList();
-        try {
-            this.model = this.readModel();
-
-            String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
-
-            OntClass ontClass = this.model.getOntClass(classURI );
-            Iterator subIter = ontClass.listDeclaredProperties();
-            while (subIter.hasNext()) {
-                OntProperty property = (OntProperty) subIter.next();
-                JSONObject obj = new JSONObject();
-                obj.put("propertyName",property.getLocalName());
-
-                obj.put("propertyType",property.getRDFType().getLocalName());
-
-                if(property.getDomain()!=null)
-                    obj.put("domain", property.getDomain().getLocalName());
-                if(property.getRange()!=null)
-                    obj.put("range",property.getRange().getLocalName());
-
-                list.add(obj);
-
-
-            }
-
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        this.model = this.readModel();
+        String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
+        OntClass ontClass = this.model.getOntClass(classURI );
+        Iterator<OntProperty> subIter = ontClass.listDeclaredProperties();
+        while (subIter.hasNext()) {
+            OntProperty property = subIter.next();
+            JSONObject obj = new JSONObject();
+            obj.put("propertyName",property.getLocalName());
+            obj.put("propertyType",property.getRDFType().getLocalName());
+            if(property.getDomain()!=null)
+                obj.put("domain", property.getDomain().getLocalName());
+            if(property.getRange()!=null)
+                obj.put("range",property.getRange().getLocalName());
+            list.add(obj);
         }
-        return null;
+        return list;
     }
 
     @RequestMapping(value = "/equivClasses",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -211,7 +171,6 @@ public class PizzaOntologyRestApi {
         List<JSONObject> list=new ArrayList();
         try {
             this.model = this.readModel();
-
             String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
             System.out.println(classURI);
             OntClass personne = this.model.getOntClass(classURI );
@@ -221,70 +180,48 @@ public class PizzaOntologyRestApi {
                 JSONObject obj = new JSONObject();
                 obj.put("URI",sub.getURI());
                 list.add(obj);
-
-
             }
-
             return list;
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @RequestMapping(value = "/Instances",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/instances")
     public   List<JSONObject> getInstancesClasses(@RequestParam("classname") String className) {
         List<JSONObject> list=new ArrayList();
         try {
             this.model = this.readModel();
-
             String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
             System.out.println(classURI);
             OntClass personne = this.model.getOntClass(classURI );
-            Iterator subIter = personne.listInstances();
+            Iterator<? extends OntResource> subIter = personne.listInstances();
             JSONObject obj = new JSONObject();
-
             while (subIter.hasNext()) {
                 Individual   sub = (Individual) subIter.next();
                 StmtIterator it = sub.listProperties();
-
                 while ( it.hasNext()) {
-                    Statement s = (Statement) it.next();
-
+                    Statement s =  it.next();
                     if (s.getObject().isLiteral()) {
-
                         obj.put("name",sub.getLocalName());
                         //Sobj.put("name",sub.getProperty(null));
                         obj.put("type",s.getPredicate().getLocalName());
-
                         obj.put("value",s.getLiteral().getLexicalForm().toString());
-
                         obj.put("uri",sub.getURI());
                         //System.out.println(""+s.getLiteral().getLexicalForm().toString()+" type = "+s.getPredicate().getLocalName());
-
                     }
-
-
                     else   {
                         obj.put("name",sub.getLocalName());
                         //Sobj.put("name",sub.getProperty(null));obj.put("value",s.getLiteral().getLexicalForm().toString());
 
                         obj.put("uri",sub.getURI());
                     } //System.out.println(""+s.getObject().toString().substring(53)+" type = "+s.getPredicate().getLocalName());
-
-
                 }
                 System.out.println(sub);
-
                 list.add(obj);
-
             }
-
             return list;
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -292,480 +229,6 @@ public class PizzaOntologyRestApi {
     }
 
 
-    @RequestMapping(value = "/isHierarchyRoot",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public   List<JSONObject> isHirarchieroot(@RequestParam("classname") String className) {
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String classURI = "http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#".concat(className);
-            System.out.println(classURI);
-            OntClass personne = model.getOntClass(classURI );
-
-            if (personne != null){
-                JSONObject obj = new JSONObject();
-                if (personne.isHierarchyRoot()){
-                    obj.put("isroot","true");
-                }else {
-                    obj.put("isroot","false");
-                }
-
-                list.add(obj);
-
-            }
-
-
-
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @RequestMapping(value = "/query",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> query() {
-
-
-        List<JSONObject> list=new ArrayList();
-        try {
-            this.model = this.readModel();
-
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?MoyenneGamme ?nom " +
-                            " WHERE { ?MoyenneGamme vec:nom ?nom    } " ;
-
-            //Query query = QueryFactory.create(req1);
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, this.model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                //System.out.println(solution.get("x").toString());
-                obj.put("IRI",solution.get("MoyenneGamme").toString());
-                obj.put("property",solution.get("nom").toString());
-                //obj.put("object",solution.get("z").toString());
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/moyennegame",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getMoyenneGames() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?MoyenneGamme ?nom " +
-                            " WHERE { ?MoyenneGamme vec:nom ?nom    } " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-
-                System.out.println(solution.get("nom").toString().substring(solution.get("nom").toString().indexOf('#')+1));
-                obj.put("label",solution.get("MoyenneGamme").toString().substring(solution.get("MoyenneGamme").toString().indexOf('#')+1));
-                obj.put("nom",solution.get("nom").toString().substring(solution.get("nom").toString().indexOf('#')+1));
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @RequestMapping(value = "/hautegame",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getHauteGames() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?HauteGamme ?nom " +
-                            " WHERE { ?HauteGamme vec:nom ?nom    } " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-
-                System.out.println(solution.get("nom").toString().substring(solution.get("nom").toString().indexOf('#')+1));
-                obj.put("label",solution.get("HauteGamme").toString().substring(solution.get("HauteGamme").toString().indexOf('#')+1));
-                obj.put("nom",solution.get("nom").toString().substring(solution.get("nom").toString().indexOf('#')+1));
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/getMarques",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getMarques() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT DISTINCT ?Marque  " +
-                            " WHERE { ?Marque vec:nom ?nom    } " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-
-                System.out.println(solution.get("Marque").toString().substring(solution.get("Marque").toString().indexOf('#')+1));
-                obj.put("marque",solution.get("Marque").toString().substring(solution.get("Marque").toString().indexOf('#')+1));
-                //  obj.put("nom",solution.get("nom").toString().substring(solution.get("nom").toString().indexOf('#')+1));
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/getCarburants",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getCarburants() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT DISTINCT ?Carburant  " +
-                            " WHERE { ?Carburant rdfs:subClassOf vec:Carburant} " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-                obj.put("carburant",solution.get("Carburant").toString().substring(solution.get("Carburant").toString().indexOf('#')+1));
-
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/getCylindress",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getCylindres() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?Cylindree" +
-                            " WHERE {  ?Cylindree rdfs:subClassOf vec:Cylindree} " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-                obj.put("Cylindree",solution.get("Cylindree").toString().substring(solution.get("Cylindree").toString().indexOf('#')+1));
-
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/vehicule/{couleur}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getVecByCouleur(@PathVariable String couleur) {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?voiture  " +
-                            " WHERE { ?voiture vec:couleur '"+couleur+"'} " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-                obj.put("label",solution.get("voiture").toString().substring(solution.get("voiture").toString().indexOf('#')+1));
-
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/vehicules/{consumme}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getVecByConsumme(@PathVariable String consumme) {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?voiture  " +
-                            " WHERE {  ?consomme vec:consomme '"+consumme+"'} " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-                System.out.println(solution);
-                obj.put("label",solution.get("voiture").toString().substring(solution.get("voiture").toString().indexOf('#')+1));
-
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/getConsommes",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> getConsommes() {
-
-
-        List<JSONObject> list=new ArrayList();
-        String fileName = "data/pizza.owl";
-        try {
-            File file = new File(fileName);
-            FileReader reader = new FileReader(file);
-            OntModel model = ModelFactory
-                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
-            model.read(reader,null);
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                            " SELECT   DISTINCT  ?consomme " +
-                            " WHERE { ?voiture vec:consomme  ?consomme} " ;
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                obj.put("id",x);
-
-                obj.put("label",solution.get("consomme").toString().substring(solution.get("consomme").toString().indexOf('#')+1));
-
-
-
-
-                list.add(obj);
-            }
-            System.out.println(x);
-            return list;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @RequestMapping(value = "/getVehicules",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<JSONObject> queryGetallInstance() {
-
-
-        List<JSONObject> list=new ArrayList();
-        try {
-            this.model = this.readModel();
-
-            String querygetPays =
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                            "PREFIX vec: <http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#>  " +
-                            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-
-                            " SELECT ?voiture  ?consomme ?fabriquant ?couleur ?nbporte" +
-                            " WHERE { ?voiture vec:consomme ?consomme .  ?voiture vec:est_fabrique_par ?fabriquant . ?voiture vec:couleur ?couleur . ?voiture vec:nombreDePortes ?nbporte .  } " ;
-
-            //Query query = QueryFactory.create(req1);
-            QueryExecution qe = QueryExecutionFactory.create(querygetPays, this.model);
-            ResultSet resultSet = qe.execSelect();
-            int x=0;
-            while (resultSet.hasNext()) {
-                x++;
-                JSONObject obj = new JSONObject();
-                QuerySolution solution = resultSet.nextSolution();
-                //System.out.println(solution.get("x").toString());
-                obj.put("id",x);
-
-                obj.put("label",solution.get("voiture").toString().substring(solution.get("voiture").toString().indexOf('#')+1));
-                //obj.put("type",solution.get("type").toString().substring(solution.get("type").toString().indexOf('#')+1));
-                obj.put("consomme",solution.get("consomme").toString().substring(solution.get("consomme").toString().indexOf('#')+1));
-                obj.put("fabriquePar ",solution.get("fabriquant").toString().substring(solution.get("fabriquant").toString().indexOf('#')+1));
-                obj.put("couleur",solution.get("couleur").toString());
-                obj.put("nombredePorte",solution.get("nbporte").toString().substring(0, 1));
-                //obj.put("property",solution.get("nom").toString());
-                //obj.put("object",solution.get("z").toString());
-                list.add(obj);
-            }
-            listVoitures = list ;
-            System.out.println(x);
-            return listVoitures;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     @RequestMapping(value = "/add",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<JSONObject> AddInstance(@RequestParam("name") String name,@RequestParam("couleur") String couleur,@RequestParam("nbPorte") int nbPorte ,
                                         @RequestParam("marque") String marque,@RequestParam("cylindree") String cylindree,@RequestParam("boite") String boite,@RequestParam("type") String type,@RequestParam("consomme") String consomme) {

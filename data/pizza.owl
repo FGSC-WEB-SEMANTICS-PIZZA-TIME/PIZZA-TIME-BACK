@@ -320,7 +320,7 @@
 
     <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Margherita -->
 
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Margherita">
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Margherita_Pizza">
         <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza"/>
         <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
         <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
@@ -334,7 +334,7 @@
 
     <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Marinara -->
 
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Marinara">
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Marinara_Pizza">
         <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Pizza"/>
         <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
         <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Tomato"/>
@@ -380,13 +380,15 @@
 
     <!-- http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Brownie_Fruit_Pizza -->
 
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Brownie_Fruit_Pizza">
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Chocolate_Pizza">
         <rdf:type rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Sweet_Pizza"/>
         <hasSauce rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Nutella_Sauce"/>
+        <hasCrust rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Regular_Thin_Crust"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Blueberries"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Redberries"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberries"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Strawberry_Jam"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">350</Calories>
         <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">17</Price>
     </owl:NamedIndividual>
 
@@ -464,6 +466,8 @@
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Mozzarella"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Provolone"/>
         <hasTopping rdf:resource="http://www.semanticweb.org/firas/ontologies/2021/9/pizza-ontology#Shrimps"/>
+        <Calories rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">360</Calories>
+        <Price rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</Price>
     </owl:NamedIndividual>
 
 
